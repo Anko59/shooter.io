@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Shooter.io !</title>
+
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+    <script language="javascript" type="text/javascript" src="/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="/sketch.js"></script>
+
+</head>
+
+<body>
+    <meta charset="utf-8">
+    <script src="http://localhost:80/socket.io/socket.io.js"></script>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <form class="navbar-form navbar-right">
+                    <div class="form-group">
+                        <input type="text" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Sign in</button>
+                    <a class="btn btn-info" href="/register.html" role="button">Register</a>
+                </form>
+            </div>
+            <!--/.navbar-collapse -->
+        </div>
+    </nav>
+    <div class="site-wrapper">
+
+        <div class="site-wrapper-inner">
+
+            <div class="cover-container">
+
+                <div class="inner-cover">
+                    <h1 class="cover-heading">Shooter.io ! </h1>
+                    <input type="text" class="form-control" placeholder="Pseudo" id="Pseudo">
+                    <div class="login-button">
+                        <!-- <a class="btn3d btn btn-default btn-lg" href="/Server/H1Z1/Client/index.html","/Server/H1Z1/Client/sketch.js", role="button">Play</a> -->
+                        <button type="submit" class="btn3d btn btn-default btn-lg" id="Login">Play</button>
+                    </div>
+                </div>
+                <script>
+                    var redirect = function(location) {
+                        window.location = location;
+                    }
+                    $('#Login').on('click', function() {
+                        socket = io.connect("http://localhost:80");
+                        socket.emit('Server', false);
+                        var pseudo = $('#Pseudo').val();
+                        socket.on('id', function(data) {
+                            var id = data;
+                            var data = {
+                                pseudo: pseudo,
+                                id: id
+                            };
+                            document.cookie = "id=" + data.id.toString();
+                            socket.emit('dataPlayer', data);
+                            redirect("http://localhost:8080");
+                        });
+                    });
+                </script>
+                <div class="mastfoot">
+                    <div class="inner">
+                        <p>A game by Anko&Hars</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</body>
+
+</html>
