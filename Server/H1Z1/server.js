@@ -6,6 +6,7 @@ var User = mapFile.User;
 var map = new mapFile.Map();
 var ioc = require('socket.io-client');
 var Clients = {};
+var x = 500;
 
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/Client/index.html');
