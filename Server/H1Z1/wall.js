@@ -16,7 +16,6 @@ var Soil = function(map,data){
 	else {
 		this.z_index = 0;
 	}
-	console.log(this.z_index);
 	map.soils.push(this);
 }
 exports.Wall = Wall;

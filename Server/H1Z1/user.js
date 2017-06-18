@@ -59,9 +59,23 @@ var User = function(pseudo, id, map) {
         height: 140,
         src: "sprite.png"
     };
+    this.hitBox = function() {
+        return [this.x, this.y, this.sizeX, this.sizeY];
+    }
     this.start = function(map) {
-        this.x = functions.random(map.maxX);
-        this.y = functions.random(map.maxY);
+        var inWall = 1;
+        while (inWall){
+            this.x = functions.random(map.maxX);
+            this.y = functions.random(map.maxY);
+            inWall = 0;
+            for (var i = 0; i < map.walls.length; i++){
+                if (functions.isTouching(this.hitBox(),map.walls[i])){
+                    inWall = 1;
+                    break;
+
+                }
+            }
+        }
         this.sizeX = 30;
         this.sizeY = 50;
         this.speed = {
@@ -265,9 +279,6 @@ var User = function(pseudo, id, map) {
         }
         this.inventory.bullets += loot.bullets;
         map.chunks[this.chunkPos[0]][this.chunkPos[1]].loots.splice(map.chunks[this.chunkPos[0]][this.chunkPos[1]].loots.indexOf(loot), 1);
-    }
-    this.hitBox = function() {
-        return [this.x, this.y, this.sizeX, this.sizeY];
     }
     this.scrollInventory = function(dir) {
         if (this.inventory.weapons.length > 0) {

@@ -1,3 +1,5 @@
+var metaServerUrl = "http://localhost:80";
+var currentUrl = "http://localhost:8080"
 var express = require('express');
 var app = express();
 var mapFile = require('./map.js');
@@ -90,11 +92,29 @@ app.get('/leaderboard.js', function(req, res) {
 console.log("Server up!");
 var socket = require('socket.io');
 var io = socket(server).listen(server);
-var client = ioc.connect("http://localhost:80");
-client.emit('Server', true);
+var client = ioc.connect(metaServerUrl);
+data = {
+    gameMode: "H1Z1",
+    url: currentUrl,
+    status: "Ready"
+}
+client.emit('Server', data);
 client.on('newClient', function(data) {
     Clients[data.id] = data.pseudo;
 });
+function informMetaServer(){
+    if (map.users.length > 60){
+        var status = "Full";
+    }
+    else {
+        var status = "Ready";
+    }
+    data = {
+        nbrUsers: map.users.length,
+        status: status
+    }
+    client.emit("Refresh", data);
+}
 io.sockets.on('connection', function newConnection(socket) {
     console.log("Connexion establised");
     socket.on('id', function(data) {
@@ -197,3 +217,4 @@ var sortPlayers = function() {
 var updateMinimap = function() {}
 setInterval(sortPlayers, 1000);
 setInterval(updateBullets, 10);
+setInterval(informMetaServer,2000);

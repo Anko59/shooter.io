@@ -75,6 +75,8 @@ var Map = function Map(){
 	this.bullets = [];
 	this.loots = [];
 	this.walls = [];
+	this.gazTimer = 0;
+	this.safePoint = [functions.random(this.maxX), functions.random(this.maxY)];
 	for (var i = 0;i<this.mapDesign.walls.length;i++){
 		color = this.mapDesign.walls[i][4];
 		try {
@@ -185,19 +187,26 @@ var Map = function Map(){
 		var x = Math.trunc(pos[0] / chunkSizeX);
 		return this.chunks[y][x];
 	}
+	this.refreshGaz = function(){
+
+	}
 	this.getVisibleChunks = function(pos){
 		var y = Math.trunc(pos[1] / chunkSizeY);
 		var x = Math.trunc(pos[0] / chunkSizeX);
 		visibleChunks = [];
-		visibleChunks.push(this.chunks[y][x]);
-		visibleChunks.push(this.chunks[y][x+1]);
-		visibleChunks.push(this.chunks[y][x-1]);
-		visibleChunks.push(this.chunks[y+1][x]);
-		visibleChunks.push(this.chunks[y+1][x-1]);
-		visibleChunks.push(this.chunks[y+1][x+1]);
-		visibleChunks.push(this.chunks[y-1][x]);
-		visibleChunks.push(this.chunks[y-1][x-1]);
-		visibleChunks.push(this.chunks[y-1][x+1]);
+		pushedYChunks = [y, y, y, y+1, y+1,y+1,y-1,y-1,y-1];
+		pushedXChunks = [x, x+1, x-1, x,x+1,x-1,x,x+1,x-1];
+		for (var i = 0; i < pushedXChunks.length; i++){
+			try{
+				newChunk = this.chunks[pushedYChunks[i]][pushedXChunks[i]];
+				if (newChunk != undefined){
+					visibleChunks.push(newChunk);
+				}
+			}
+			catch(e){
+				
+			}
+		}
 		/*for (var y1 = 0; y1 < this.maxYVisible/2;y1+= chunkSizeY){
 			y1+= chunkSizeY;
 		 	for (var x1 = 0; x1 < this.maxXVisible/2;){
