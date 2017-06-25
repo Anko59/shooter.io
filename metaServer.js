@@ -5,7 +5,7 @@ var gameServer = require("./gameServer.js");
 var GameServer = gameServer.GameServer;
 var connect = require('connect');
 var app = connect()
-app.use(favicon(path.join(__dirname, 'kalash.png')));
+app.use(favicon(path.join(__dirname, '/images/kalash.png')));
 
 var app = express();
 var server = app.listen(80);
@@ -44,16 +44,16 @@ app.get('/sketch.js', function(req, res){
   res.sendFile(__dirname + '/sketch.js')
 });
 app.get('/crown.png', function(req, res){
-  res.sendFile(__dirname + '/crown.png')
+  res.sendFile(__dirname + '/images/crown.png')
 });
 app.get('/skull.png', function(req, res){
-  res.sendFile(__dirname + '/skull.png')
+  res.sendFile(__dirname + '/images/skull.png')
 });
 app.get('/united-states.png', function(req, res){
-  res.sendFile(__dirname + '/united-states.png')
+  res.sendFile(__dirname + '/images/united-states.png')
 });
 app.get('/favicon.png', function(req, res){
-  res.sendFile(__dirname + '/kalash.png')
+  res.sendFile(__dirname + '/images/kalash.png')
 });
 var socket = require('socket.io');
 var io = socket(server).listen(server);
@@ -73,7 +73,7 @@ io.sockets.on('connection', function newConnection(socket){
     data.id = socket.id;
     new GameServer(data);
   });
-    
+
   socket.on('dataPlayer', function(data){
     var newData = {
       id: data.id,
@@ -85,4 +85,3 @@ io.sockets.on('connection', function newConnection(socket){
     gameServer.servers[socket.id].refresh(data);
   });
 });
-

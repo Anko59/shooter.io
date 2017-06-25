@@ -8,12 +8,12 @@
 
     <title>Shooter.io !</title>
     <link rel="icon" href="favicon.png" />
-
-    <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/bootstrap-theme.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/bootstrap.css" rel="stylesheet">
+
     <script language="javascript" type="text/javascript" src="/jquery.js"></script>
     <script language="javascript" type="text/javascript" src="/sketch.js"></script>
+    <link href="/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -46,10 +46,13 @@
         </div>
     </nav>
     <div class="site-wrapper">
-
         <div class="site-wrapper-inner">
+            <div class="mastfoot" style='position:absolute; left: 50%; transform: translate(-50%, 0%);'>
+                <p>A game by Anko&Hars</p>
+            </div>
 
-            <div class="cover-container" style = "position:absolute; top: 20%; left: 50%; transform: translate(-50%, 0%);">
+
+            <div class="cover-container" style="position:absolute; top: 20%; left: 50%; transform: translate(-50%, 0%);">
 
                 <div class="inner-cover">
                     <h1 class="cover-heading">Shooter.io ! </h1>
@@ -62,60 +65,52 @@
 
                 <div class="container">
 
-    <div class="container" style = 'position: relative; left: -20%; padding-top:50px; width: 70%;'>
-        <div class="row form-group product-chooser">
-        
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                <div class="product-chooser-item" id="FFA">
-                    <img src= "skull.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop">
-                    <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
-                        <span class="title">FFA</span>
-                        <span class="description">Free For All, respawn enabeld. Everyone is an ennemy, work on your streaks and defeat your opponents.</span>
-                        <input type="radio" name="product" value="mobile_desktop" checked="checked">
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </div>
-            
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                <div class="product-chooser-item selected" id ="King of the Hill">
-                    <img src="crown.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Desktop">
-                    <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
-                        <span class="title">King of the Hill</span>
-                        <span class="description">Respawn disabeld, the gaz is spreading. Everyone is an ennemi, be the last warrior standing.</span>
-                        <input type="radio" name="product" value="desktop">
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </div>
-            
-            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                <div class="product-chooser-item" id="Gound War">
-                    <img src="united-states.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile">
-                    <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
-                       <span class="title">Ground War</span>
-                        <span class="description">Respawn enabled, team game. Play with your allies and take territoires across the map.</span>
-                        <input type="radio" name="product" value="mobile">
-                    </div>
-                    <div class="clear"></div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
-                   
+                    <div class="container" style='position: absolute; left: 0%; padding-top:50px; padding-bottom:20px; width: 100%; height: 100%'>
+                        <div class="row form-group product-chooser">
 
-                <div class="mastfoot">
-                    <div class="inner">
-                        <p>A game by Anko&Hars</p>
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="product-chooser-item" id="FFA">
+                                    <img src="skull.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop">
+                                    <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                                        <span class="title">FFA</span>
+                                        <span class="description">Free For All, respawn enabeld. Work on your streaks and defeat your opponents.</span>
+                                        <input type="radio" name="product" value="mobile_desktop" checked="checked">
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="product-chooser-item selected" id="King of the Hill">
+                                    <img src="crown.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Desktop">
+                                    <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                                        <span class="title">King of the Hill</span>
+                                        <span class="description">Respawn disabeld, the gaz is spreading. Everyone is an ennemy, be the last man standing.</span>
+                                        <input type="radio" name="product" value="desktop">
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <div class="product-chooser-item" id="Gound War">
+                                    <img src="united-states.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop">
+                                    <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                                        <span class="title">Ground War</span>
+                                        <span class="description">Respawn enabled, team game. Play with your allies and take territoires across the map. This is awesome.</span>
+                                        <input type="radio" name="product" value="mobile_desktop" checked="checked">
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
 
         </div>
-
-    </div>
 </body>
 
 </html>
