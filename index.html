@@ -8,12 +8,13 @@
 
     <title>Shooter.io !</title>
     <link rel="icon" href="favicon.png" />
-    <link href="/css/bootstrap-theme.css" rel="stylesheet">
-    <link href="/css/bootstrap.css" rel="stylesheet">
+    <link href="/Bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="/Bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
 
     <script language="javascript" type="text/javascript" src="/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="/Bootstrap/js/bootstrap.js"></script>
     <script language="javascript" type="text/javascript" src="/sketch.js"></script>
-    <link href="/css/style.css" rel="stylesheet">
 
 </head>
 
@@ -52,65 +53,118 @@
             </div>
 
 
-            <div class="cover-container" style="position:absolute; top: 20%; left: 50%; transform: translate(-50%, 0%);">
+            <div class="cover-container" style="position:absolute; top: 15%; left: 50%; transform: translate(-50%, 0%);">
 
                 <div class="inner-cover">
-                    <h1 class="cover-heading">Shooter.io ! </h1>
-                    <input type="text" class="form-control" placeholder="Pseudo" id="Pseudo">
-                    <div class="login-button">
-                        <!-- <a class="btn3d btn btn-default btn-lg" href="/Server/H1Z1/Client/index.html","/Server/H1Z1/Client/sketch.js", role="button">Play</a> -->
-                        <button type="submit" class="btn3d btn btn-default btn-lg" id="Login">Play</button>
-                    </div>
+                    <h1 class="cover-heading">Shooter.io !</h1>
                 </div>
-
-                <div class="container">
-
-                    <div class="container" style='position: absolute; left: 0%; padding-top:50px; padding-bottom:20px; width: 100%; height: 100%'>
-                        <div class="row form-group product-chooser">
-
-                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                <div class="product-chooser-item" id="FFA">
-                                    <img src="skull.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop">
-                                    <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
-                                        <span class="title">FFA</span>
-                                        <span class="description">Free For All, respawn enabeld. Work on your streaks and defeat your opponents.</span>
-                                        <input type="radio" name="product" value="mobile_desktop" checked="checked">
-                                    </div>
-                                    <div class="clear"></div>
+                <div class="container" style="position:absolute; top: 20%; left: 50%; transform: translate(-50%, 0%);">
+                    <div class="row">
+                        <div class="board">
+                            <ul class="nav nav-tabs">
+                                <div class="liner"></div>
+                                <li rel-index="0" class="active">
+                                    <a href="#step-1" class="btn" aria-controls="step-1" role="tab" data-toggle="tab">
+                                        <span><i class="glyphicon glyphicon-user"></i></span>
+                                    </a>
+                                </li>
+                                <li rel-index="1">
+                                    <a href="#step-2" class="btn disabled" aria-controls="step-2" role="tab" data-toggle="tab">
+                                        <span><i class="glyphicon glyphicon-fire"></i></span>
+                                    </a>
+                                </li>
+                                <li rel-index="2">
+                                    <a href="#step-3" class="btn disabled" aria-controls="step-3" role="tab" data-toggle="tab">
+                                        <span><i class="glyphicon glyphicon-sunglasses"></i></span>
+                                    </a>
+                                </li>
+                                <li rel-index="3">
+                                    <a href="#step-4" class="btn disabled" aria-controls="step-4" role="tab" data-toggle="tab">
+                                        <span><i class="glyphicon glyphicon-ok"></i></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="step-1" style="background-color:#333">
+                                <div class="col-md-12">
+                                    <span class="label label-default">Enter your pseudo</span>
+                                    <div class="row form-group product-chooser">
+                                      <input type="text" class="form-control" placeholder="Pseudo" id="Pseudo" style="width: 70%; position:absolute; top: 50%;left: 50%; transform: translate(-50%, 0%);" value="_Steven"></input>
+                                      <button id="step-1-next" class="btn btn-lg btn-primary nextBtn pull-right">Next</button>
+                                  </div>
                                 </div>
                             </div>
+                            <div role="tabpanel" class="tab-pane" id="step-2">
+                                <div class="col-md-12">
+                                  <span class="label label-default">Pick a gameMode !</span>
+                                    <div class="row form-group product-chooser" style="width: 70%; position:absolute; top: 50%;left: 50%; transform: translate(-50%, 0%);">
 
-                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                <div class="product-chooser-item selected" id="King of the Hill">
-                                    <img src="crown.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Desktop">
-                                    <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
-                                        <span class="title">King of the Hill</span>
-                                        <span class="description">Respawn disabeld, the gaz is spreading. Everyone is an ennemy, be the last man standing.</span>
-                                        <input type="radio" name="product" value="desktop">
+
+                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="product-chooser-item" id="FFA">
+                                                <img src="skull.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop">
+                                                <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                                                    <span class="title">FFA</span>
+                                                    <span class="description">Free For All, respawn enabeld. Work on your streaks and defeat your opponents.</span>
+                                                    <input type="radio" name="product" value="mobile_desktop" checked="checked">
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="product-chooser-item selected" id="King of the Hill">
+                                                <img src="crown.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Desktop">
+                                                <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                                                    <span class="title">King of the Hill</span>
+                                                    <span class="description">Respawn disabeld, the gaz is spreading. Everyone is an ennemy, be the last man standing.</span>
+                                                    <input type="radio" name="product" value="desktop">
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                            <div class="product-chooser-item" id="Gound War">
+                                                <img src="united-states.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop">
+                                                <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
+                                                    <span class="title">Ground War</span>
+                                                    <span class="description">Respawn enabled, team game. Play with your allies and take territoires across the map.</span>
+                                                    <input type="radio" name="product" value="mobile_desktop" checked="checked">
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="clear"></div>
+                                    <button id="step-2-next" class="btn btn-lg btn-primary pull-right">Next</button>
                                 </div>
                             </div>
-
-                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
-                                <div class="product-chooser-item" id="Gound War">
-                                    <img src="united-states.png" class="img-rounded col-xs-4 col-sm-4 col-md-12 col-lg-12" alt="Mobile and Desktop">
-                                    <div class="col-xs-8 col-sm-8 col-md-12 col-lg-12">
-                                        <span class="title">Ground War</span>
-                                        <span class="description">Respawn enabled, team game. Play with your allies and take territoires across the map. This is awesome.</span>
-                                        <input type="radio" name="product" value="mobile_desktop" checked="checked">
+                            <div role="tabpanel" class="tab-pane" id="step-3">
+                                <div class="col-md-12">
+                                    <span class="label label-default">Pick a skin !</span>
+                                    <div style="width: 70%; position:absolute; top: 50%;left: 50%; transform: translate(-50%, 0%);">
                                     </div>
-                                    <div class="clear"></div>
+                                    <button id="step-3-next" class="btn btn-lg btn-primary pull-right">Next</button>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="step-4">
+                                <div class="col-md-12">
+                                    <span class="label label-default">Hit the play button !</span>
+                                    <div class="login-button" style="width: 70%; position:absolute; top: 50%;left: 50%; transform: translate(-50%, 0%);">
+                                        <!-- <a class="btn3d btn btn-default btn-lg" href="/Server/H1Z1/Client/index.html","/Server/H1Z1/Client/sketch.js", role="button">Play</a> -->
+                                        <button type="submit" class="btn3d btn btn-default btn-lg" id="Login">Play</button>
+                                    </div>
+                                    <button id="step-4-next" class="btn btn-lg btn-primary pull-right">Continue</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
+
+    </div>
 </body>
 
 </html>

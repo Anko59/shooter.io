@@ -13,14 +13,17 @@ var server = app.listen(80);
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
+app.get('/Bootstrap/js/bootstrap.js', function(req, res){
+  res.sendFile(__dirname + '/Bootstrap/js/bootstrap.js');
+});
 app.get('/css/style.css', function(req, res){
   res.sendFile(__dirname + '/css/style.css');
 });
-app.get('/css/bootstrap.css', function(req, res){
-  res.sendFile(__dirname + '/css/bootstrap.css');
+app.get('/Bootstrap/css/bootstrap.css', function(req, res){
+  res.sendFile(__dirname + '/Bootstrap/css/bootstrap.css');
 });
-app.get('/css/bootstrap-theme.css', function(req, res){
-  res.sendFile(__dirname + '/css/bootstrap-theme.css');
+app.get('/Bootstrap/css/bootstrap-theme.css', function(req, res){
+  res.sendFile(__dirname + '/Bootstrap/css/bootstrap-theme.css');
 });
 app.get('/register.html', function(req, res){
   res.sendFile(__dirname + '/register.html');
@@ -54,6 +57,17 @@ app.get('/united-states.png', function(req, res){
 });
 app.get('/favicon.png', function(req, res){
   res.sendFile(__dirname + '/images/kalash.png')
+});
+app.get('/Bootstrap/fonts/glyphicons-halflings-regular.woff2', function(req, res){
+  res.type('application/x-font-woff2');
+  res.sendFile(__dirname + '/Bootstrap/fonts/glyphicons-halflings-regular.woff2')
+});
+app.get('/Bootstrap/fonts/glyphicons-halflings-regular.woff', function(req, res){
+  res.type('application/x-font-woff');
+  res.sendFile(__dirname + '/Bootstrap/fonts/glyphicons-halflings-regular.woff')
+});
+app.get('/Bootstrap/fonts/glyphicons-halflings-regular.ttf ', function(req, res){
+  res.sendFile(__dirname + '/Bootstrap/fonts/glyphicons-halflings-regular.ttf')
 });
 var socket = require('socket.io');
 var io = socket(server).listen(server);
