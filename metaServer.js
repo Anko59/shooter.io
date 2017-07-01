@@ -92,6 +92,7 @@ io.sockets.on('connection', function newConnection(socket){
     var newData = {
       id: data.id,
       pseudo: data.pseudo,
+      skinSrc: data.skin + ".png"
     };
     socket.broadcast.to(gameServer.urls[data.url].id).emit('newClient', newData);
   });

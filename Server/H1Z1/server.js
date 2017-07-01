@@ -20,8 +20,8 @@ app.get('/sprite.js', function(req, res) {
     res.sendFile(__dirname + '/Client/sprite.js');
 });
 
-app.get('/sprite.png', function(req, res) {
-    res.sendFile(__dirname + '/images/sprite.png');
+app.get('/ninja.png', function(req, res) {
+    res.sendFile(__dirname + '/images/ninja.png');
 
 });
 app.get('/images/bullet.png', function(req, res) {
@@ -81,6 +81,10 @@ app.get('/images/aidKit.png', function(req, res) {
     res.sendFile(__dirname + '/images/aidKit.png');
 
 });
+app.get('/nazi.png', function(req, res) {
+    res.sendFile(__dirname + '/images/nazi.png');
+
+});
 app.get('/style.css', function(req, res) {
     res.sendFile(__dirname + '/Client/style.css');
 
@@ -100,13 +104,22 @@ data = {
 }
 client.emit('Server', data);
 client.on('newClient', function(data) {
-    Clients[data.id] = data.pseudo;
+    Clients[data.id] = {
+        pseudo: data.pseudo,
+        skin: {
+        ticksPerFrame: 4,
+        numberOfFrames: 7,
+        width: 1050,
+        height: 140,
+        src: data.skinSrc
+      }
+    };
 });
-function informMetaServer(){
-    if (map.users.length > 60){
+
+function informMetaServer() {
+    if (map.users.length > 60) {
         var status = "Full";
-    }
-    else {
+    } else {
         var status = "Ready";
     }
     data = {
@@ -118,7 +131,9 @@ function informMetaServer(){
 io.sockets.on('connection', function newConnection(socket) {
     console.log("Connexion establised");
     socket.on('id', function(data) {
-        const newUser = new User(Clients[data], socket.id, map);
+        console.log(Clients[data].skin)
+        const newUser = new User(Clients[data].skin, Clients[data].pseudo, socket.id, map);
+        console.log(newUser);
         socket.emit('init', newUser, map.users);
         socket.emit('minimap', map.minimap);
         socket.broadcast.emit('loadPlayer', newUser);
@@ -217,4 +232,4 @@ var sortPlayers = function() {
 var updateMinimap = function() {}
 setInterval(sortPlayers, 1000);
 setInterval(updateBullets, 10);
-setInterval(informMetaServer,2000);
+setInterval(informMetaServer, 2000);

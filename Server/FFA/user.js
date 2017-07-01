@@ -40,7 +40,7 @@ var Inventory = function() {
         return data;
     }
 }
-var User = function(pseudo, id, map) {
+var User = function(skin, pseudo, id, map) {
     console.log("User created");
     this.resizeCanvas = function(canvasSize){
         this.canvasSizeX = canvasSize[0];
@@ -52,13 +52,7 @@ var User = function(pseudo, id, map) {
     this.id = id;
     this.deathCounter = 0;
     this.kills = 0;
-    this.skin = {
-        ticksPerFrame: 4,
-        numberOfFrames: 7,
-        width: 1050,
-        height: 140,
-        src: "sprite.png"
-    };
+    this.skin = skin;
 
     this.hitBox = function() {
         return [this.x, this.y, this.sizeX, this.sizeY];

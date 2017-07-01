@@ -1,3 +1,5 @@
+var skin = "nazi";
+
 $('#Login').on('click', function() {
     // $( ".cover-container" ).append( "<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>");
     console.log("click!");
@@ -11,6 +13,12 @@ $(function() {
         $(this).find('input[type="radio"]').prop("checked", true);
         selected = $(this).attr('id');
         console.log(selected);
+    });
+    $('#nazi').on('click', function(){
+      skin = "nazi";
+    });
+    $('#ninja').on('click', function(){
+      skin = "ninja";
     });
 });
 var redirect = function(location) {
@@ -28,7 +36,8 @@ $(function() {
                 var data = {
                     pseudo: pseudo,
                     id: id,
-                    url: url
+                    url: url,
+                    skin: skin
                 };
                 document.cookie = "id=" + data.id.toString();
                 socket.emit('dataPlayer', data);
@@ -37,7 +46,7 @@ $(function() {
                 }, 3000);
             });
         } else {
-          alert("please enter a pseudo");
+            alert("please enter a pseudo");
 
         }
     });
@@ -45,7 +54,7 @@ $(function() {
 $(function() {
     // Nav Tab stuff
     $('.nav-tabs > li > a').click(function() {
-        if($(this).hasClass('disabled')) {
+        if ($(this).hasClass('disabled')) {
             return false;
         } else {
             var linkIndex = $(this).parent().index() - 1;
@@ -58,7 +67,7 @@ $(function() {
         // Check values here
         var isValid = true;
 
-        if(isValid) {
+        if (isValid) {
             $('.nav-tabs > li:nth-of-type(2) > a').removeClass('disabled').click();
         }
     });
@@ -66,7 +75,7 @@ $(function() {
         // Check values here
         var isValid = true;
 
-        if(isValid) {
+        if (isValid) {
             $('.nav-tabs > li:nth-of-type(3) > a').removeClass('disabled').click();
         }
     });
@@ -74,7 +83,7 @@ $(function() {
         // Check values here
         var isValid = true;
 
-        if(isValid) {
+        if (isValid) {
             $('.nav-tabs > li:nth-of-type(4) > a').removeClass('disabled').click();
         }
     });

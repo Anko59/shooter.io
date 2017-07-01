@@ -20,8 +20,12 @@ app.get('/sprite.js', function(req, res) {
     res.sendFile(__dirname + '/Client/sprite.js');
 });
 
-app.get('/sprite.png', function(req, res) {
-    res.sendFile(__dirname + '/images/sprite.png');
+app.get('/ninja.png', function(req, res) {
+    res.sendFile(__dirname + '/images/ninja.png');
+
+});
+app.get('/nazi.png', function(req, res) {
+    res.sendFile(__dirname + '/images/nazi.png');
 
 });
 app.get('/images/bullet.png', function(req, res) {
@@ -104,7 +108,16 @@ data = {
 }
 client.emit('Server', data);
 client.on('newClient', function(data) {
-    Clients[data.id] = data.pseudo;
+    Clients[data.id] = {
+        pseudo: data.pseudo,
+        skin: {
+        ticksPerFrame: 4,
+        numberOfFrames: 7,
+        width: 1050,
+        height: 140,
+        src: data.skinSrc
+      }
+    };
 });
 function informMetaServer(){
     if (map.users.length > 60){
@@ -122,7 +135,7 @@ function informMetaServer(){
 io.sockets.on('connection', function newConnection(socket) {
     console.log("Connexion establised");
     socket.on('id', function(data) {
-        const newUser = new User(Clients[data], socket.id, map);
+        const newUser = new User(Clients[data].skin, Clients[data].pseudo, socket.id, map);
         socket.emit('init', newUser, map.users);
         socket.emit('minimap', map.minimap);
         socket.broadcast.emit('loadPlayer', newUser);
