@@ -52,6 +52,12 @@ app.get('/crown.png', function(req, res){
 app.get('/skull.png', function(req, res){
   res.sendFile(__dirname + '/images/skull.png')
 });
+app.get('/nazi.png', function(req, res){
+  res.sendFile(__dirname + '/images/nazi.png')
+});
+app.get('/ninja.png', function(req, res){
+  res.sendFile(__dirname + '/images/ninja.png')
+});
 app.get('/united-states.png', function(req, res){
   res.sendFile(__dirname + '/images/united-states.png')
 });
