@@ -181,6 +181,14 @@ io.sockets.on('connection', function newConnection(socket) {
     socket.on('canvasSize', function(canvas) {
         map.users[socket.id].resizeCanvas(canvas);
     });
+    socket.on('needData',function(x){
+        data = {
+            gameMode: "FFA",
+            url: currentUrl,
+            status: "Ready"
+        };
+        socket.emit('Server',data)
+    });
 
     function updatePlayer() {
         try {

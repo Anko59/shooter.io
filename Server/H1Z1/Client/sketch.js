@@ -1,5 +1,6 @@
 var socket;
 var player;
+var metaServerUrl = "http://localhost:80";
 var players = [];
 var bullets = [];
 var visibleBullets = [];
@@ -15,6 +16,91 @@ var playersConnected = 0;
 var angle;
 var speedVector;
 var minimapData = [];
+var safePoint = [0,0];
+var safeDistance = 99999;
+function undisplayOverlay(){
+    $("Joined").hide(1000);
+}
+function displayDeathOverlay(){
+    $('Death').show(1000);
+}
+function createGaz(){
+    dimensions = createVector(20000,20000);
+    radius = safeDistance;
+    middle = createVector(safePoint[0] - player.x, safePoint[1] - player.y);
+    push();
+    fill(0,0,0);
+    rect(0,0,100,100);
+    fill(0,255,0,100);
+    noStroke();
+    rect(-10000, -10000, dimensions.x, middle.y - radius);
+    rect(-10000, middle.y - radius, middle.x - radius, 2 * radius);
+    rect(-10000, middle.y + radius, dimensions.x, dimensions.y - (middle.y + radius));
+    rect(middle.x + radius, middle.y - radius, dimensions.x - (middle.x + radius), 2 *radius);
+    precision = 50;
+    var pas = 3.14 / precision;
+    angle = 0;
+
+    beginShape();
+    vertex(middle.x - radius,middle.y-radius);
+    for (var i = 0; i < precision; i++){
+        newVector = p5.Vector.fromAngle(angle);
+        vertex(Math.round(middle.x - newVector.x *  radius),Math.round(middle.y - newVector.y * radius));
+        angle += pas;   
+        if (angle > 3.14 / 2){
+            break;
+        }
+     }
+    vertex(middle.x - radius,middle.y-radius);
+    endShape();
+
+    beginShape();
+    vertex(middle.x ,middle.y-radius);
+    for (var i = 0; i < precision; i++){
+        newVector = p5.Vector.fromAngle(angle);
+        vertex(Math.round(middle.x - newVector.x *  radius),Math.round(middle.y - newVector.y * radius));
+        angle += pas;   
+        if (angle > 3.14 ){
+            break;
+        }
+     }
+    vertex(middle.x + radius,middle.y-radius);
+    endShape();
+
+    beginShape();
+    vertex(middle.x + radius,middle.y);
+    for (var i = 0; i < precision; i++){
+        newVector = p5.Vector.fromAngle(angle);
+        vertex(Math.round(middle.x - newVector.x *  radius),Math.round(middle.y - newVector.y * radius));
+        angle += pas;   
+        if (angle > 3.14 * 1.5){
+            break;
+        }
+     }
+    vertex(middle.x + radius,middle.y + radius);
+    endShape();
+    beginShape();
+    vertex(middle.x ,middle.y+radius);
+    for (var i = 0; i < precision; i++){
+        newVector = p5.Vector.fromAngle(angle);
+        vertex(Math.round(middle.x - newVector.x *  radius),Math.round(middle.y - newVector.y * radius));
+        angle += pas;   
+        if (angle > 3.14 * 2){
+            break;
+        }
+     }
+    vertex(middle.x - radius,middle.y + radius);
+    endShape();
+    pop();
+}
+function die(){
+    displayDeathOverlay();
+    setTimeout(function(){
+        console.log('redirected');
+        window.location = metaServerUrl;
+    },5000);
+}
+setTimeout(undisplayOverlay,5000);
 
 function Inventory() {
     this.weapons = [];
@@ -25,7 +111,6 @@ function Inventory() {
 function Weapon() {
     this.name = "Fist";
 }
-
 function setup() {
     createCanvas(windowWidth, windowHeight);
     var dimensions = [windowWidth / 1920, windowHeight / 1080];
@@ -68,11 +153,12 @@ function draw() {
     try {
         player.show();
     } catch (e) {
-        console.log(e);
     }
     animationLoop();
+    createGaz();
     Leaderboard();
     blitPlayers();
+
     computePlayerSpeed(player.direction);
 }
 
@@ -323,7 +409,13 @@ socket.on('Leaderboard', function(data) {
 socket.on('updateMinimap', function(data) {
     minimapData = data;
 });
-
+socket.on('Gaz',function(data){
+    safePoint = data.safePoint;
+    safeDistance = data.safeDistance;
+})
+socket.on('Dead',function(x){
+    die();
+})
 function update() {
     for (var i = 0; i < visibleSoils.length; i++) {
         if (visibleSoils[i].z_index == 0){

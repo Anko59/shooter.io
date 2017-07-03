@@ -78,21 +78,39 @@ app.get('/Bootstrap/fonts/glyphicons-halflings-regular.ttf ', function(req, res)
 var socket = require('socket.io');
 var io = socket(server).listen(server);
 console.log("metaserver up!");
-io.sockets.on('connection', function newConnection(socket) {
-    socket.on('User', function(selected) {
-        console.log('user connected');
-        var id = Math.round(Math.random() * 1000000000);
-        url = gameServer.getUrl(selected);
-        data = {
-            id: id,
-            url: url
-        };
-        socket.emit('id', data);
-    });
-    socket.on("Server", function(data) {
-        data.id = socket.id;
-        new GameServer(data);
-    });
+io.sockets.on('connection', function newConnection(socket){
+  socket.on('User', function(selected){
+    console.log('user connected');
+    var id = Math.round(Math.random()*1000000000);
+    url = gameServer.getUrl(selected);
+    data = {
+      id:id,
+      url: url
+    };
+    socket.emit('id', data);
+  });
+  socket.on("Server",function(data){
+    console.log("New Server");
+    data.id = socket.id;
+    new GameServer(data);
+  });
+
+  socket.on('dataPlayer', function(data){
+    var newData = {
+      id: data.id,
+      pseudo: data.pseudo,
+    };
+    socket.broadcast.to(gameServer.urls[data.url].id).emit('newClient', newData);
+  });
+  socket.on("Refresh", function(data){
+    try{
+      gameServer.servers[socket.id].refresh(data);
+    }
+    catch(e){
+      socket.emit('needData',true);
+    }
+  });
+});
 
     socket.on('dataPlayer', function(data) {
         var newData = {
