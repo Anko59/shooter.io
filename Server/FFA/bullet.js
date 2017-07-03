@@ -16,7 +16,8 @@ var Bullet = function(posX,posY,speedX,speedY,damages,shooterId,range,size,map){
 		bullets.splice(bullets.indexOf(this));
 	}
 	this.refresh = function(map){
-		chunk = map.getChunk([this.x,this.y]);
+		chunkPos = map.getChunkPos([this.x,this.y]);;
+		var chunk = map.chunks[chunkPos[0]][chunkPos[1]];
 		this.range -= 1;
 		if (this.range <= 0){
 			chunk.bullets.splice(chunk.bullets.indexOf(this), 1);
@@ -25,8 +26,13 @@ var Bullet = function(posX,posY,speedX,speedY,damages,shooterId,range,size,map){
 		}
 		this.x += this.speedX;
 		this.y += this.speedY;
-		if (map.getChunkPos([this.x,this.y]) != this.chunkPos){
+		newChunkPos = map.getChunkPos([this.x,this.y]).toString();
+		oldChunkPos = this.chunkPos.toString();
+		if (oldChunkPos != newChunkPos){
+			//console.log("y");
 			map.chunks[this.chunkPos[0]][this.chunkPos[1]].bullets.splice(map.chunks[this.chunkPos[0]][this.chunkPos[1]].bullets.indexOf(this),1);
+			this.chunkPos = map.getChunkPos([this.x,this.y]);
+			var chunk = map.chunks[this.chunkPos[0]][this.chunkPos[1]];
 			chunk.bullets.push(this);
 		}
 		for (id in chunk.users){
