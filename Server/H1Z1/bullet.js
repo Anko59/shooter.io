@@ -20,12 +20,14 @@ var Bullet = function(posX,posY,speedX,speedY,damages,shooterId,range,size,map){
 		this.range -= 1;
 		if (this.range <= 0){
 			chunk.bullets.splice(chunk.bullets.indexOf(this), 1);
+			map.bullets.splice(map.bullets.indexOf(this), 1);
 			return 0;
 		}
 		this.x += this.speedX;
 		this.y += this.speedY;
 		if (map.getChunkPos([this.x,this.y]) != this.chunkPos){
 			map.chunks[this.chunkPos[0]][this.chunkPos[1]].bullets.splice(map.chunks[this.chunkPos[0]][this.chunkPos[1]].bullets.indexOf(this),1);
+			this.chunkPos = map.getChunkPos([this.x,this.y]);
 			chunk.bullets.push(this);
 		}
 		for (id in chunk.users){

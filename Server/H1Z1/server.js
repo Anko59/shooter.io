@@ -98,6 +98,7 @@ data = {
     url: currentUrl,
     status: "Ready"
 }
+console.log(data);
 client.emit('Server', data);
 client.on('newClient', function(data) {
     Clients[data.id] = data.pseudo;
@@ -124,8 +125,9 @@ io.sockets.on('connection', function newConnection(socket) {
         socket.broadcast.emit('loadPlayer', newUser);
         updateMinimap();
         updatePlayer();
-        setInterval(updatePlayer, 50);
-        setInterval(updateMinimap, 1500);
+        intervalId = setInterval(updatePlayer, 50);
+        minimapId = setInterval(updateMinimap, 1500);
+        newUser.intervalIds = [intervalId, minimapId];
     });
     socket.on('mousePressed', function(booleain) {
         try {
@@ -142,8 +144,13 @@ io.sockets.on('connection', function newConnection(socket) {
         }
     });
     socket.on('mousePos', function(data) {
-        map.users[socket.id].mouseX = data.x;
-        map.users[socket.id].mouseY = data.y;
+        try{
+            map.users[socket.id].mouseX = data.x;
+            map.users[socket.id].mouseY = data.y;
+        }
+        catch(e){
+
+        }
         //console.log("Data received");
     });
     socket.on('mouseWheel', function(dir) {
@@ -162,13 +169,34 @@ io.sockets.on('connection', function newConnection(socket) {
         }
     });
     socket.on('canvasSize', function(canvas) {
-        map.users[socket.id].resizeCanvas(canvas);
+        try{
+            map.users[socket.id].resizeCanvas(canvas);
+        }
+        catch(e){
+
+        }
+    });
+    socket.on('needData',function(x){
+        data = {
+            gameMode: "H1Z1",
+            url: currentUrl,
+            status: "Ready"
+        };
+        socket.emit('Server',data)
     });
 
     function updatePlayer() {
         try {
-            map.users[socket.id].updateData(map);
-            var data = map.users[socket.id].pack();
+            player = map.users[socket.id];
+            if (player.life <= 0){
+                clearInterval(player.intervalIds[0]);
+                clearInterval(player.intervalIds[1]);
+                socket.emit('Dead',true);
+                player.quit(map);
+                interrupt[0];
+            }
+            player.updateData(map);
+            var data = player.pack();
             socket.emit("refresh", data);
         } catch (e) {
             console.log(e);
@@ -214,7 +242,16 @@ var sortPlayers = function() {
     }
     io.sockets.emit('Leaderboard', tenBest);
 }
+function refreshGaz(){
+    map.refreshGaz();
+    data = {
+        safeDistance: map.safeDistance,
+        safePoint: map.safePoint
+    }
+    io.sockets.emit('Gaz',data);
+}
 var updateMinimap = function() {}
 setInterval(sortPlayers, 1000);
 setInterval(updateBullets, 10);
 setInterval(informMetaServer,2000);
+setInterval(refreshGaz,map.refreshRate);

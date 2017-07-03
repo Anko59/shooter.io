@@ -36,3 +36,22 @@ html {
 	text-align: center;
 	font-size: 150%;
 }
+div.overlay-container div.overlay-container-hidden{
+	position: absolute;
+	top:40%;
+	width:100%;
+	background-color: rgba(50, 50, 50, 0.5);
+	z-index: 9999;
+}
+div.overlay-container div.overlay-container-hidden h1{
+	position:relative;
+	top:40%;
+	left: 35%;
+	color:red;
+	font-family: 'Helvetica';
+	font-size: 100px;
+	font-weight:bold;
+}
+div.overlay-container-hidden{
+	display: none;
+}

@@ -59,10 +59,12 @@ var User = function(pseudo, id, map) {
         height: 140,
         src: "sprite.png"
     };
+    this.intervalIds = [];
     this.hitBox = function() {
         return [this.x, this.y, this.sizeX, this.sizeY];
     }
     this.start = function(map) {
+        this.alive = true;
         var inWall = 1;
         while (inWall){
             this.x = functions.random(map.maxX);
@@ -101,19 +103,19 @@ var User = function(pseudo, id, map) {
         this.ttlSpeed = 8;
         this.chunkPos = map.getChunkPos([this.x,this.y]);
         map.chunks[this.chunkPos[0]][this.chunkPos[1]].users.push(this);
+
     }
     this.start(map);
     this.resizeCanvas([1920,1080]);
     this.color = (functions.random(255), functions.random(255), functions.random(255));
     this.die = function(shooterId, map) {
-        this.deathCounter += 1;
         map.users[shooterId].kills += 1;
         newLoot = new Loot(map,[this.x, this.y]);
         newLoot.weapons = this.inventory.weapons;
         newLoot.bullets  = this.inventory.bullets;
         newLoot.weapons.push(this.principalWeapon);
         map.loots.push(newLoot);
-        this.start(map);
+        this.alive = false;
     }
     this.isTouched = function(damages, shooterId, map) {
         if (shooterId != this.id) {
@@ -190,12 +192,18 @@ var User = function(pseudo, id, map) {
     }
     this.quit = function(map) {
         delete map.users[this.id];
+        map.getChunk([this.x,this.y]).users.splice(map.getChunk([this.x,this.y]).users.indexOf(this),1);
         for (var b = 0; b < map.bullets.length; b++) {
             ball = map.bullets[b];
             if (ball.shooterId == this.id) {
                 map.bullets.splice(map.bullets.indexOf(ball));
             }
-        } // Called when player disconnected
+        }
+        for (var i = 0; i < this.intervalIds.length;i++){
+            console.log(this.intervalIds);
+            clearInterval(this.intervalIds[i]);
+        }
+         // Called when player disconnected
     }
     this.shoot = function(map) {
         this.principalWeapon.shoot(map, this);
@@ -216,7 +224,10 @@ var User = function(pseudo, id, map) {
         if (this.isShooting) {
             this.shoot(map);
         }
-
+        distance = Math.round(Math.sqrt(Math.pow(this.x - map.safePoint[0], 2) + Math.pow(this.y - map.safePoint[1], 2)));
+        if (distance > map.safeDistance){
+            this.life -= 0.001;
+        }
     }
     this.quickPack = function() {
         principalWeaponPacked = this.principalWeapon.quickPack();

@@ -70,6 +70,7 @@ io.sockets.on('connection', function newConnection(socket){
     socket.emit('id', data);
   });
   socket.on("Server",function(data){
+    console.log("New Server");
     data.id = socket.id;
     new GameServer(data);
   });
@@ -82,7 +83,12 @@ io.sockets.on('connection', function newConnection(socket){
     socket.broadcast.to(gameServer.urls[data.url].id).emit('newClient', newData);
   });
   socket.on("Refresh", function(data){
-    gameServer.servers[socket.id].refresh(data);
+    try{
+      gameServer.servers[socket.id].refresh(data);
+    }
+    catch(e){
+      socket.emit('needData',true);
+    }
   });
 });
 

@@ -77,6 +77,10 @@ var Map = function Map(){
 	this.walls = [];
 	this.gazTimer = 0;
 	this.safePoint = [functions.random(this.maxX), functions.random(this.maxY)];
+	this.safeDistance = Math.round(Math.sqrt(Math.pow(this.maxX, 2)+Math.pow(this.maxY, 2)));
+	this.refreshRate = 1000;
+	this.msTime = 180000;
+	this.diminutionRate = (this.safeDistance / this.msTime) * this.refreshRate;
 	for (var i = 0;i<this.mapDesign.walls.length;i++){
 		color = this.mapDesign.walls[i][4];
 		try {
@@ -187,9 +191,6 @@ var Map = function Map(){
 		var x = Math.trunc(pos[0] / chunkSizeX);
 		return this.chunks[y][x];
 	}
-	this.refreshGaz = function(){
-
-	}
 	this.getVisibleChunks = function(pos){
 		var y = Math.trunc(pos[1] / chunkSizeY);
 		var x = Math.trunc(pos[0] / chunkSizeX);
@@ -223,6 +224,9 @@ var Map = function Map(){
 		};*/
 		return visibleChunks;
 
+	}
+	this.refreshGaz = function(){
+		this.safeDistance -= this.diminutionRate;
 	}
 
 }

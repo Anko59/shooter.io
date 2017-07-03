@@ -20,6 +20,7 @@ var Bullet = function(posX,posY,speedX,speedY,damages,shooterId,range,size,map){
 		this.range -= 1;
 		if (this.range <= 0){
 			chunk.bullets.splice(chunk.bullets.indexOf(this), 1);
+			map.bullets.splice(map.bullets.indexOf(this), 1);
 			return 0;
 		}
 		this.x += this.speedX;
@@ -33,13 +34,13 @@ var Bullet = function(posX,posY,speedX,speedY,damages,shooterId,range,size,map){
 			if (functions.rectIsTouchingCircle(player.hitBox(),this.hitBox()) && player.id != this.shooterId){
 				player.isTouched(this.damages, this.shooterId,map);
 				chunk.bullets.splice(chunk.bullets.indexOf(this), 1);
+				map.bullets.splice(map.bullets.indexOf(this), 1);
 			}
 		}
 		for (var x =0; x < chunk.walls.length;x++){
 			if (functions.rectIsTouchingCircle(chunk.walls[x].pos,this.hitBox())){
 				chunk.bullets.splice(chunk.bullets.indexOf(this), 1);
 				map.bullets.splice(map.bullets.indexOf(this), 1);
-				console.log("yes");
 			}
 		}
 	}
