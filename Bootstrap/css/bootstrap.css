@@ -7213,7 +7213,6 @@ svg {
 
 .text-copy {
     fill: none;
-    stroke: white;
     stroke-dasharray: 6% 29%;
     stroke-width: 5px;
     stroke-dashoffset: 0%;
@@ -7221,28 +7220,33 @@ svg {
 }
 
 .text-copy:nth-child(1){
-    stroke: #F2385A;
+    stroke: ##009999;
 	animation-delay: -1.2s;
 }
 
 .text-copy:nth-child(2){
-	stroke: #F5A503;
+	stroke: #006666;
 	animation-delay: -2.4s;
 }
 
 .text-copy:nth-child(3){
-	stroke: #E9F1DF;
+	stroke: #00cc99;
 	animation-delay: -3.6s;
 }
 
 .text-copy:nth-child(4){
-	stroke: #56D9CD;
+	stroke: #339966;
 	animation-delay: -4.8s;
 }
 .text-copy:nth-child(5){
-	stroke: #3aa1bf;
+	stroke: #00ffff;
 	animation-delay: -6s;
 }
+.text-copy:nth-child(6){
+	stroke: #00ffff;
+	animation-delay: -7.2s;
+}
+
 
 @keyframes stroke-offset{
 	100% {stroke-dashoffset: -35%;}

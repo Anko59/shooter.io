@@ -1,5 +1,5 @@
-var metaServerUrl = "http://localhost:80";
-var currentUrl = "http://localhost:8080"
+var metaServerUrl = "http://90.1.161.240:80";
+var currentUrl = "http://90.1.161.240:8080"
 var express = require('express');
 var app = express();
 var mapFile = require('./map.js');

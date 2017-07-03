@@ -27,7 +27,7 @@ var redirect = function(location) {
 $(function() {
     $('#Login').on('click', function() {
         var pseudo = $('#Pseudo').val();
-        socket = io.connect("http://localhost:80");
+        socket = io.connect("http://90.1.161.240:80");
         if (pseudo != "") {
             socket.emit('User', selected);
             socket.on('id', function(data) {

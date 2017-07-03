@@ -258,7 +258,7 @@ function showSoils(soil) {
     pop();
 
 }
-var socket = io.connect("http://localhost:8081");
+var socket = io.connect("http://90.1.161.240:8081");
 
 var getCookie = function(cname) {
     var name = cname + "=";
@@ -277,7 +277,7 @@ var getCookie = function(cname) {
 
 var checkId = function(cname) {
     if (getCookie(cname) == "") {
-        window.location = "http://localhost:80";
+        window.location = "http://90.1.161.240:80";
     } else {
         var id = getCookie(cname);
         socket.emit('id', id);
