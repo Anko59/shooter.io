@@ -1,7 +1,5 @@
 var points = [];
-var nbrPoints = 50;
 var currentColor = [Math.trunc(Math.random()*3), Math.trunc(Math.random()*100+155),Math.trunc(Math.random() * 255)];
-console.log(currentColor);
 function getRandomAngle(){
     return (random((2*PI) * Math.pow(10,5)) / Math.pow(10, 5)); //return random gradiant angle
 }
@@ -51,14 +49,16 @@ var gPoint = function(){
 
     }
 }
-function createPoints(){
+function createPoints(nbrPoints){
     for (var i = 0; i < nbrPoints; i++){
         var newPoint = new gPoint();
     }
 } 
 function setup(){
+    var nbrPoints = Math.trunc(windowWidth/48);
+    console.log(nbrPoints)
     createCanvas(windowWidth, windowHeight);
-    createPoints();
+    createPoints(nbrPoints);
 }
 function draw(){
     background(0);
@@ -69,6 +69,14 @@ function draw(){
 }
 function windowResized() {
     resizeCanvas(windowWidth, windowHeight);
+    nbrPoints = Math.trunc(windowWidth/48);
+    while(nbrPoints < points.length){
+        points.splice(random(points.length),1);
+    }
+    while(nbrPoints > points.length){
+        newPoint = new gPoint();
+    }
+    console.log(points.length);
 }
 function setCurrentColor(){
     currentColor[1] += 1;
@@ -83,6 +91,5 @@ function setCurrentColor(){
     if (currentColor[2] > 255){
         currentColor[2] = 0;
     }
-    console.log(currentColor);
 }
 setInterval(setCurrentColor,250);
