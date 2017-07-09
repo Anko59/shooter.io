@@ -75,6 +75,9 @@ app.get('/Bootstrap/fonts/glyphicons-halflings-regular.woff', function(req, res)
 app.get('/Bootstrap/fonts/glyphicons-halflings-regular.ttf ', function(req, res) {
     res.sendFile(__dirname + '/Bootstrap/fonts/glyphicons-halflings-regular.ttf')
 });
+app.get('/background-animation.js', function(req, res) {
+    res.sendFile(__dirname + '/background-animation.js')
+});
 var socket = require('socket.io');
 var io = socket(server).listen(server);
 console.log("metaserver up!");
@@ -110,21 +113,21 @@ io.sockets.on('connection', function newConnection(socket){
       socket.emit('needData',true);
     }
   });
-});
 
-    socket.on('dataPlayer', function(data) {
-        var newData = {
-            id: data.id,
-            pseudo: data.pseudo,
-            skinSrc: data.skin + ".png"
-        };
-        socket.broadcast.to(gameServer.urls[data.url].id).emit('newClient', newData);
-    });
-    socket.on("Refresh", function(data) {
-        try {
-            gameServer.servers[socket.id].refresh(data);
-        } catch (e) {
+  socket.on('dataPlayer', function(data) {
+    var newData = {
+      id: data.id,
+      pseudo: data.pseudo,
+      skinSrc: data.skin + ".png"
+    };
+    socket.broadcast.to(gameServer.urls[data.url].id).emit('newClient', newData);
 
-        }
-    });
+  });
+  socket.on("Refresh", function(data) {
+    try {
+      gameServer.servers[socket.id].refresh(data);
+    } 
+    catch (e) {
+    }
+  });
 });

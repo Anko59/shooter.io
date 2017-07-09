@@ -1,5 +1,5 @@
 var skin = "nazi";
-
+var metaServerUrl = "http://localhost:80";
 $('#Login').on('click', function() {
     // $( ".cover-container" ).append( "<div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>");
     console.log("click!");
@@ -27,7 +27,7 @@ var redirect = function(location) {
 $(function() {
     $('#Login').on('click', function() {
         var pseudo = $('#Pseudo').val();
-        socket = io.connect("http://90.1.161.240:80");
+        socket = io.connect(metaServerUrl);
         if (pseudo != "") {
             socket.emit('User', selected);
             socket.on('id', function(data) {
