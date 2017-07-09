@@ -56,7 +56,6 @@ function createPoints(nbrPoints){
 } 
 function setup(){
     var nbrPoints = Math.trunc(windowWidth/48);
-    console.log(nbrPoints)
     createCanvas(windowWidth, windowHeight);
     createPoints(nbrPoints);
 }
@@ -76,7 +75,6 @@ function windowResized() {
     while(nbrPoints > points.length){
         newPoint = new gPoint();
     }
-    console.log(points.length);
 }
 function setCurrentColor(){
     currentColor[1] += 1;
