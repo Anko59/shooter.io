@@ -190,3 +190,18 @@ canvas { position:fixed; top:0; left:0; z-index:-10; };
     background-color:#fff;
 .btn-label {position: relative;left: -15px;display: inline-block;padding: 6px 12px;background: rgba(0,0,0,0.15);border-radius: 3px 0 0 3px;}
 .btn-labeled {padding-top: 0;padding-bottom: 0;}
+
+img .profile-pic {
+  border-radius: 50%;
+  width: 10%;
+  height: 10%;
+}
+
+div .profile-pic-container {
+  position: relative;
+  margin-left: 0px;
+  margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: none;
+}

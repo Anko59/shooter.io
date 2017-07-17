@@ -25,8 +25,13 @@ var Bullet = function(posX,posY,speedX,speedY,damages,shooterId,range,size,map){
 		}
 		this.x += this.speedX;
 		this.y += this.speedY;
+		console.log("juji");
 		if (map.getChunkPos([this.x,this.y]) != this.chunkPos){
+			console.log('Before')
 			map.chunks[this.chunkPos[0]][this.chunkPos[1]].bullets.splice(map.chunks[this.chunkPos[0]][this.chunkPos[1]].bullets.indexOf(this),1);
+			console.log('Yeh');
+			console.log(map.chunks[this.chunkPos[0]][this.chunkPos[1]].bullets)
+			console.log(ap.chunks[this.chunkPos[0]][this.chunkPos[1]].bullets.indexOf(this));
 			this.chunkPos = map.getChunkPos([this.x,this.y]);
 			chunk.bullets.push(this);
 		}

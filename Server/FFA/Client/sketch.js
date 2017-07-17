@@ -15,6 +15,8 @@ var playersConnected = 0;
 var angle;
 var speedVector;
 var minimapData = [];
+var metaServerUrl = "http://localhost:80";
+var serverUrl = "http://localhost:8081";
 function undisplayOverlay(){
     $("div").hide(1000);
     console.log("hidden");
@@ -258,7 +260,7 @@ function showSoils(soil) {
     pop();
 
 }
-var socket = io.connect("http://90.1.161.240:8081");
+var socket = io.connect(serverUrl);
 
 var getCookie = function(cname) {
     var name = cname + "=";
@@ -277,7 +279,7 @@ var getCookie = function(cname) {
 
 var checkId = function(cname) {
     if (getCookie(cname) == "") {
-        window.location = "http://90.1.161.240:80";
+        window.location = metaServerUrl;
     } else {
         var id = getCookie(cname);
         socket.emit('id', id);

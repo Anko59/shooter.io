@@ -1,5 +1,5 @@
-var metaServerUrl = "http://90.1.161.240:80";
-var currentUrl = "http://90.1.161.240:8081";
+var metaServerUrl = "https://localhost";
+var currentUrl = "http://localhost:8081";
 var express = require('express');
 var app = express();
 var mapFile = require('./map.js');
@@ -141,7 +141,7 @@ io.sockets.on('connection', function newConnection(socket) {
         socket.broadcast.emit('loadPlayer', newUser);
         updateMinimap();
         updatePlayer();
-        setInterval(updatePlayer, 50);
+        setInterval(updatePlayer, 100);
         setInterval(updateMinimap, 1500);
     });
     socket.on('mousePressed', function(booleain) {
@@ -251,5 +251,5 @@ var updateLoots = function(){
 }
 setInterval(updateLoots, 2000);
 setInterval(sortPlayers, 1000);
-setInterval(updateBullets, 10);
+setInterval(updateBullets, 20);
 setInterval(informMetaServer,2000);

@@ -1,15 +1,24 @@
+var dataBaseUrl = 'https://localhost:8083';
 var express = require('express');
 var favicon = require('serve-favicon');
 var path = require('path');
 var gameServer = require("./gameServer.js");
+var bcrypt = require('bcrypt');
+
+var fs = require('fs');
+var http = require('http');
+var https = require('https');
 var GameServer = gameServer.GameServer;
 var connect = require('connect');
 var app = connect()
 app.use(favicon(path.join(__dirname, '/images/kalash.png')));
+var privateKey  = fs.readFileSync('certificates/key.pem', 'utf8');
+var certificate = fs.readFileSync('certificates/cert.pem', 'utf8');
+var credentials = {key: privateKey, cert: certificate};
+
 
 var app = express();
-var server = app.listen(80);
-
+var server = https.createServer(credentials, app).listen(443);
 app.get('/', function(req, res) {
     res.sendFile(__dirname + '/index.html');
 });
@@ -32,7 +41,7 @@ app.get('/css/register.css', function(req, res) {
     res.sendFile(__dirname + '/css/register.css');
 });
 app.get('/background.png', function(req, res) {
-    res.sendFile(__dirname + '/background.png');
+    res.sendFile(__dirname + '/images/background.png');
 });
 app.get('/Server/H1Z1/Client/index.html', function(req, res) {
     res.sendFile(__dirname + '/Server/H1Z1/Client/index.html');
@@ -78,10 +87,27 @@ app.get('/Bootstrap/fonts/glyphicons-halflings-regular.ttf ', function(req, res)
 app.get('/background-animation.js', function(req, res) {
     res.sendFile(__dirname + '/background-animation.js')
 });
+app.get('/register.js', function(req, res) {
+    res.sendFile(__dirname + '/register.js');
+});
+app.get('/navbar.js', function(req, res) {
+    res.sendFile(__dirname + '/navbar.js');
+});
 var socket = require('socket.io');
 var io = socket(server).listen(server);
+var ioc = require('socket.io-client');
 console.log("metaserver up!");
 io.sockets.on('connection', function newConnection(socket){
+  socket.on('Register',function(data){
+    bcrypt.hash(data.password, 10, function(err, hash) {
+      data.password = hash;
+      newSocket = ioc.connect(dataBaseUrl);
+      newSocket.emit('newUser',data);
+      newSocket.on('newUserBack',function(answer){
+        socket.emit('registered',answer);
+      });
+    });
+  });
   socket.on('User', function(selected){
     console.log('user connected');
     var id = Math.round(Math.random()*1000000000);
@@ -91,6 +117,19 @@ io.sockets.on('connection', function newConnection(socket){
       url: url
     };
     socket.emit('id', data);
+  });
+
+  socket.on('signIn', function(data){
+     console.log("sign");
+     bcrypt.hash(data.password, 10, function(err, hash) {
+      data.password = hash;
+      newSocket = ioc.connect(dataBaseUrl);
+      newSocket.emit('newSignIn',data);
+      newSocket.on('newSignInBack',function(answer){
+        console.log(answer);
+        socket.emit('login',answer);
+      });
+    });
   });
   socket.on("Server",function(data){
     console.log("New Server");

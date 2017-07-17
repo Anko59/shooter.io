@@ -10,18 +10,21 @@
 
     <title>Shooter.io !</title>
 
-    <link href="/css/bootstrap.css" rel="stylesheet">
-    <link href="/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="/Bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+    <link href="/Bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="/css/register.css" rel="stylesheet">
+    <script src="https://localhost/socket.io/socket.io.js"></script>
+    <script language="javascript" type="text/javascript" src="/jquery.js"></script>
+    <script language="javascript" type="text/javascript" src="/register.js"></script>
 </head>
 
-<body BACKGROUND = "background.png">
+<body style = "position: fixed; top: 0; left:0; width:100%; height:100%; background-image: url('background.png'); background-repeat:no-repeat;background-size: cover;">
   <meta charset="utf-8">
-  <script src="http://90.1.161.240:80/socket.io/socket.io.js"></script>
+  <script src="https://localhost/socket.io/socket.io.js"></script>
     <div class="container">
 
         <div class="row">
-            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3" id ='formulaire'>
                 <form role="form">
                     <h2>Please Sign Up <small>It's free and always will be.</small></h2>
                     <hr class="colorgraph">
@@ -38,9 +41,16 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <div class = "hidden-overlay red" id = "pseudoOverlay">
+                            <h1>Invalid Pseudo</h1>
+                        </div>
                         <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="Pseudo" tabindex="3">
                     </div>
                     <div class="form-group">
+                        <div class = "hidden-overlay red" id = "emailOverlay">
+                            <h1>Email already used</h1>
+                        </div>
+                        <input
                         <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email Address" tabindex="4">
                     </div>
                     <div class="row">
@@ -51,16 +61,15 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="form-group">
+                                <div class = "hidden-overlay red" id = "passwordsOverlay">
+                                    <h1>Passwords not matching</h1>
+                                </div>
                                 <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-lg" placeholder="Confirm Password" tabindex="6">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xs-4 col-sm-3 col-md-3">
-                            <span class="button-checkbox">
-      						<button type="button" class="btn" data-color="info" tabindex="7">I Agree</button>
-                              <input type="checkbox" name="t_and_c" id="t_and_c" class="hidden" value="1">
-      					</span>
                         </div>
                         <div class="col-xs-8 col-sm-9 col-md-9">
                             By clicking <strong class="label label-primary">Register</strong>, you agree to the <a href="#" data-toggle="modal" data-target="#t_and_c_m">Terms and Conditions</a> set out by this site, including our Cookie Use.
@@ -69,13 +78,16 @@
 
                     <hr class="colorgraph">
                     <div class="row">
-                        <div class="col-xs-12 col-md-6"><input type="submit" value="Register" class="btn btn-primary btn-block btn-lg" tabindex="7"></div>
+                        <div class="col-xs-12 col-md-6"><button type="button" class="btn btn-primary btn-block btn-lg" id = 'Register' tabindex="7">Register</button></div>
                         <div class="col-xs-12 col-md-6"><a href="#" class="btn btn-success btn-block btn-lg">Sign In</a></div>
                     </div>
                 </form>
             </div>
         </div>
-        <!-- Modal -->
+        <div class = 'hidden-overlay green' id='thx'>
+            <h1> Thank tou for your registration </h1>
+            <h2> You will be redirected in a few seconds </h2>
+        </div>
         <div class="modal fade" id="t_and_c_m" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
